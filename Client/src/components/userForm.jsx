@@ -9,8 +9,7 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-
-
+import { Link } from "react-router-dom";
 
 const UserForm = ({ screen, initialValues, handleFormSubmit }) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -250,19 +249,38 @@ const UserForm = ({ screen, initialValues, handleFormSubmit }) => {
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
-            <Box display="flex" justifyContent="end" mt="20px">
-              <Button
-                type="submit"
-                color="secondary"
-                variant="contained"
-                disabled={
-                  !(Object.keys(touched).length > 0) ||
-                  Object.keys(errors).length > 0
-                }
-              >
-                Submit
-              </Button>
-            </Box>
+            {screen === "register" ? (
+              <Box display="flex" justifyContent="space-between" mt="20px">
+                <Link to="/login">or Login here</Link>
+                <Box ml="auto">
+                  <Button
+                    type="submit"
+                    color="secondary"
+                    variant="contained"
+                    disabled={
+                      !(Object.keys(touched).length > 0) ||
+                      Object.keys(errors).length > 0
+                    }
+                  >
+                    Submit
+                  </Button>
+                </Box>
+              </Box>
+            ) : (
+              <Box display="flex" justifyContent="end" mt="20px">
+                <Button
+                  type="submit"
+                  color="secondary"
+                  variant="contained"
+                  disabled={
+                    !(Object.keys(touched).length > 0) ||
+                    Object.keys(errors).length > 0
+                  }
+                >
+                  Submit
+                </Button>
+              </Box>
+            )}
           </form>
         )}
       </Formik>

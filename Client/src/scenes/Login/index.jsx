@@ -1,4 +1,5 @@
 import { useState, forwardRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Box, Button, TextField } from "@mui/material";
 import * as yup from "yup";
 import Header from "../../components/Header";
@@ -7,17 +8,17 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Formik, getIn } from "formik";
+import { Formik } from "formik";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const Register = () => {
+const Login = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -57,12 +58,24 @@ const Register = () => {
     axios
       .post("http://localhost:3000/auth/login", payload)
       .then((result) => {
+        localStorage.setItem("token", result.data.token);
+
         setIsSnackbarOpen((item) => {
           return {
             state: "pass",
             open: true,
           };
         });
+
+        setTimeout(() => {
+          setIsSnackbarOpen((item) => {
+            return {
+              state: item.state,
+              open: false,
+            };
+          });
+          navigate("/");
+        }, 3000);
       })
       .catch((error) => {
         setIsSnackbarOpen((item) => {
@@ -89,6 +102,8 @@ const Register = () => {
             sx={{ width: "100%" }}
           >
             Logged In successfully!!!
+            <br />
+            Redirecting to HomePage
           </Alert>
         ) : (
           <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
@@ -162,18 +177,21 @@ const Register = () => {
                   sx={{ gridColumn: "span 4" }}
                 />
               </Box>
-              <Box display="flex" justifyContent="end" mt="20px">
-                <Button
-                  type="submit"
-                  color="secondary"
-                  variant="contained"
-                  disabled={
-                    !(Object.keys(touched).length > 0) ||
-                    Object.keys(errors).length > 0
-                  }
-                >
-                  Submit
-                </Button>
+              <Box display="flex" justifyContent="space-between" mt="20px">
+                <Link to="/register">or SignUp here</Link>
+                <Box ml="auto">
+                  <Button
+                    type="submit"
+                    color="secondary"
+                    variant="contained"
+                    disabled={
+                      !(Object.keys(touched).length > 0) ||
+                      Object.keys(errors).length > 0
+                    }
+                  >
+                    Submit
+                  </Button>
+                </Box>
               </Box>
             </form>
           )}
@@ -183,4 +201,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

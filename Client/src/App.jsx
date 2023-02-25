@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import HomePage from "./scenes/HomePage";
 import Login from "./scenes/Login";
@@ -10,29 +10,90 @@ import MyProjects from "./scenes/MyProjects";
 import Profile from "./scenes/Profile";
 // import SplashScreen from "./scenes/SplashScreen";
 import Nav from "./scenes/global/nav";
+import { useEffect } from "react";
 
 import "./App.css";
 
 function App() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("token");
+    if (
+      !isAuthenticated &&
+      !window.location.pathname.includes("/register") &&
+      !window.location.pathname.includes("/Register")
+    ) {
+      navigate("/login");
+    } else if (
+      (isAuthenticated && window.location.pathname.includes("/login")) ||
+      window.location.pathname.includes("/Login") ||
+      window.location.pathname.includes("/register") ||
+      window.location.pathname.includes("/Register")
+    ) {
+      // Get the previous page from the browser history
+      // console.log(previousPathname);
+      // const previousPage = window.history.state?.prevUrl || "/";
+      navigate("/");
+    }
+  }, [navigate]);
+
   return (
     <div className="App">
       <CssBaseline />
-      {/* <h1 style={{ color: "red" }}>ghjkl</h1> */}
-      {/* <Routes>
-      </Routes> */}
+      <Routes>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/register" element={<Register />}></Route>
 
-      <Nav>
-        <Routes>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/" element={<HomePage />}></Route>
-          <Route path="/hire-freelancer" element={<HireFreelancer />}></Route>
-          <Route path="/my-projects" element={<MyProjects />}></Route>
-          <Route path="/find-jobs" element={<FindJobs />}></Route>
-          <Route path="/my-jobs" element={<MyJobs />}></Route>
-          <Route path="/profile" element={<Profile />}></Route>
-        </Routes>
-      </Nav>
+        <Route
+          path="/"
+          element={
+            <Nav>
+              <HomePage />
+            </Nav>
+          }
+        ></Route>
+        <Route
+          path="/hire-freelancer"
+          element={
+            <Nav>
+              <HireFreelancer />
+            </Nav>
+          }
+        ></Route>
+        <Route
+          path="/my-projects"
+          element={
+            <Nav>
+              <MyProjects />
+            </Nav>
+          }
+        ></Route>
+        <Route
+          path="/find-jobs"
+          element={
+            <Nav>
+              <FindJobs />
+            </Nav>
+          }
+        ></Route>
+        <Route
+          path="/my-jobs"
+          element={
+            <Nav>
+              <MyJobs />
+            </Nav>
+          }
+        ></Route>
+        <Route
+          path="/profile"
+          element={
+            <Nav>
+              <Profile />
+            </Nav>
+          }
+        ></Route>
+      </Routes>
     </div>
   );
 }

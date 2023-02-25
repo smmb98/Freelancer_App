@@ -1,4 +1,5 @@
 import { useState, forwardRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import UserForm from "../../components/userForm";
 import Header from "../../components/Header";
@@ -11,6 +12,8 @@ const Alert = forwardRef(function Alert(props, ref) {
 });
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [isSnackbarOpen, setIsSnackbarOpen] = useState({
     open: false,
     state: "error",
@@ -40,7 +43,17 @@ const Register = () => {
     axios
       .post("http://localhost:3000/auth/register", payload)
       .then((result) => {
-        console.log(payload);
+        localStorage.setItem("token", result.data.token);
+        setTimeout(() => {
+          setIsSnackbarOpen((item) => {
+            return {
+              state: item.state,
+              open: false,
+            };
+          });
+          navigate("/");
+        }, 3000);
+
         setIsSnackbarOpen((item) => {
           return {
             state: "pass",
@@ -73,6 +86,8 @@ const Register = () => {
             sx={{ width: "100%" }}
           >
             Account registered successfully!!!
+            <br />
+            Redirecting to HomePage
           </Alert>
         ) : (
           <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>

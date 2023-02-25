@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -24,11 +24,14 @@ import { styled } from "@mui/material/styles";
 
 const drawerWidth = 240;
 
-// function ResponsiveDrawer(props) {
 const Nav = (props) => {
   const { window } = props;
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const navigate = useNavigate();
 
+  function handleButtonClick(url) {
+    navigate(url);
+  }
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
   };
@@ -37,7 +40,6 @@ const Nav = (props) => {
     display: "flex",
     alignItems: "center",
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: "flex-end",
   }));
@@ -47,105 +49,59 @@ const Nav = (props) => {
       <Toolbar />
       <Divider />
       <List>
-        <Link to={"/"} style={{ textDecoration: "none", color: "#000000DE" }}>
-          <ListItem key={"Home"} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <HomeIcon></HomeIcon>
-              </ListItemIcon>
-              <ListItemText primary={"Home"} />
-            </ListItemButton>
-          </ListItem>
-        </Link>
-        <Link
-          to={"hire-freelancer"}
-          style={{ textDecoration: "none", color: "#000000DE" }}
-        >
-          <ListItem key={"Hire Freelancer"} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <HomeIcon></HomeIcon>
-              </ListItemIcon>
-              <ListItemText primary={"Hire Freelancer"} />
-            </ListItemButton>
-          </ListItem>
-        </Link>
-        <Link
-          to={"my-projects"}
-          style={{ textDecoration: "none", color: "#000000DE" }}
-        >
-          <ListItem key={"My Projects"} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <EngineeringIcon></EngineeringIcon>
-              </ListItemIcon>
-              <ListItemText primary={"My Projects"} />
-            </ListItemButton>
-          </ListItem>
-        </Link>
-        <Link
-          to={"find-jobs"}
-          style={{ textDecoration: "none", color: "#000000DE" }}
-        >
-          <ListItem key={"Find Jobs"} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <WorkIcon></WorkIcon>
-              </ListItemIcon>
-              <ListItemText primary={"Find Jobs"} />
-            </ListItemButton>
-          </ListItem>
-        </Link>
-        <Link
-          to={"my-jobs"}
-          style={{ textDecoration: "none", color: "#000000DE" }}
-        >
-          <ListItem key={"My Jobs"} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <WorkHistoryIcon></WorkHistoryIcon>
-              </ListItemIcon>
-              <ListItemText primary={"My Jobs"} />
-            </ListItemButton>
-          </ListItem>
-        </Link>
-        <Link
-          to={"profile"}
-          style={{ textDecoration: "none", color: "#000000DE" }}
-        >
-          <ListItem key={"Profile Setting"} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <AccountBoxIcon></AccountBoxIcon>
-              </ListItemIcon>
-              <ListItemText primary={"Profile Setting"} />
-            </ListItemButton>
-          </ListItem>
-        </Link>
-        {/* {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))} */}
+        <ListItem key={"Home"} disablePadding>
+          <ListItemButton onClick={() => handleButtonClick("/")}>
+            <ListItemIcon>
+              <HomeIcon></HomeIcon>
+            </ListItemIcon>
+            <ListItemText primary={"Home"} />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem key={"Hire Freelancer"} disablePadding>
+          <ListItemButton onClick={() => handleButtonClick("/hire-freelancer")}>
+            <ListItemIcon>
+              <HomeIcon></HomeIcon>
+            </ListItemIcon>
+            <ListItemText primary={"Hire Freelancer"} />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem key={"My Projects"} disablePadding>
+          <ListItemButton onClick={() => handleButtonClick("/my-projects")}>
+            <ListItemIcon>
+              <EngineeringIcon></EngineeringIcon>
+            </ListItemIcon>
+            <ListItemText primary={"My Projects"} />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem key={"Find Jobs"} disablePadding>
+          <ListItemButton onClick={() => handleButtonClick("/find-jobs")}>
+            <ListItemIcon>
+              <WorkIcon></WorkIcon>
+            </ListItemIcon>
+            <ListItemText primary={"Find Jobs"} />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem key={"My Jobs"} disablePadding>
+          <ListItemButton onClick={() => handleButtonClick("/my-jobs")}>
+            <ListItemIcon>
+              <WorkHistoryIcon></WorkHistoryIcon>
+            </ListItemIcon>
+            <ListItemText primary={"My Jobs"} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key={"Profile Setting"} disablePadding>
+          <ListItemButton onClick={() => handleButtonClick("/profile")}>
+            <ListItemIcon>
+              <AccountBoxIcon></AccountBoxIcon>
+            </ListItemIcon>
+            <ListItemText primary={"Profile Setting"} />
+          </ListItemButton>
+        </ListItem>
       </List>
-      {/* <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List> */}
     </div>
   );
 
@@ -155,17 +111,7 @@ const Nav = (props) => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={
-          {
-            // width: {
-            //   sm: `calc(100% - ${drawerWidth}px)`,
-            // },
-            // ml: { sm: `${drawerWidth}px` },
-          }
-        }
-      >
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             color="inherit"
@@ -174,13 +120,12 @@ const Nav = (props) => {
             onClick={handleDrawerToggle}
             sx={{
               mr: 2,
-              // display: { sm: "none" }
             }}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Responsive drawer
+            Freelancer World
           </Typography>
         </Toolbar>
       </AppBar>
@@ -199,7 +144,6 @@ const Nav = (props) => {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            // display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
@@ -213,22 +157,6 @@ const Nav = (props) => {
           </DrawerHeader>
           {drawer}
         </Drawer>
-
-        {/*  */}
-        {/* <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: "none", sm: "block" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-          open
-        >
-          {drawer}
-        </Drawer> */}
-        {/*  */}
       </Box>
       <Box
         component="main"
@@ -239,42 +167,10 @@ const Nav = (props) => {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
-        {/* <Toolbar /> */}
         {props.children}
-        {/* <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography> */}
       </Box>
     </Box>
   );
 };
 
 export default Nav;
-
-// export default ResponsiveDrawer;
