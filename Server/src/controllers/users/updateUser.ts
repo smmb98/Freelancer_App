@@ -1,22 +1,37 @@
 import { AppDataSource } from "../../data-source";
 import { Users } from "../../entities/Users";
+import { scrypt, randomBytes } from "crypto";
+import { promisify } from "util";
+const scryptAsyc = promisify(scrypt);
 
 export const updateUser = async (req, res) => {
   try {
-    const { name, address, mobile_number, email_address, skills, experience } =
-      req.body;
+    const {
+      name,
+      password,
+      address,
+      mobile_number,
+      email_address,
+      skills,
+      experience,
+    } = req.body;
 
     const UserRepository = AppDataSource.getRepository(Users);
     const User = await UserRepository.findOneBy({
-      id: req.currentUser.id,
+      // id: req.currentUser.id,
+      id: 1,
     });
     if (User) {
-      User.name = name;
-      User.address = address;
-      User.mobile_number = mobile_number;
-      User.email_address = email_address;
-      User.skills = skills.join(",");
-      User.experience = experience;
+      const salt = randomBytes(8).toString("hex");
+      const buf = (await scryptAsyc(password, salt, 64)) as Buffer;
+
+      name ? (User.name = name) : null;
+      password ? (User.password = `${buf.toString("hex")}.${salt}`) : null;
+      address ? (User.address = address) : null;
+      mobile_number ? (User.mobile_number = mobile_number) : null;
+      email_address ? (User.email_address = email_address) : null;
+      skills ? (User.skills = skills.join(",")) : null;
+      experience ? (User.experience = experience) : null;
       UserRepository.save(User);
 
       const payload = {

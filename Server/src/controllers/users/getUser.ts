@@ -5,7 +5,8 @@ export const getUser = async (req, res) => {
   try {
     const UserRepository = AppDataSource.getRepository(Users);
     const User = await UserRepository.findOneBy({
-      id: req.currentUser.id,
+      id: 1,
+      // id: req.currentUser.id,
     });
     if (User) {
       const payload = {
@@ -18,7 +19,7 @@ export const getUser = async (req, res) => {
       };
       res.send(payload);
     } else {
-      res.send({ message: "User not found" });
+      res.status(404).send({ message: "User not found" });
     }
   } catch (error) {
     console.error(error);

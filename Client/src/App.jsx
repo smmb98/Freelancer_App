@@ -1,34 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { Route, Routes } from "react-router-dom";
+import CssBaseline from "@mui/material/CssBaseline";
+import HomePage from "./scenes/HomePage";
+import Login from "./scenes/Login";
+import Register from "./scenes/Register";
+import HireFreelancer from "./scenes/HireFreelancer";
+import FindJobs from "./scenes/FindJobs";
+import MyJobs from "./scenes/MyJobs";
+import MyProjects from "./scenes/MyProjects";
+import Profile from "./scenes/Profile";
+// import SplashScreen from "./scenes/SplashScreen";
+import Nav from "./scenes/global/nav";
+
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <CssBaseline />
+      {/* <h1 style={{ color: "red" }}>ghjkl</h1> */}
+      {/* <Routes>
+      </Routes> */}
+
+      <Nav>
+        <Routes>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route path="/" element={<HomePage />}></Route>
+          <Route path="/hire-freelancer" element={<HireFreelancer />}></Route>
+          <Route path="/my-projects" element={<MyProjects />}></Route>
+          <Route path="/find-jobs" element={<FindJobs />}></Route>
+          <Route path="/my-jobs" element={<MyJobs />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
+        </Routes>
+      </Nav>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

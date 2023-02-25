@@ -20,20 +20,27 @@ export const register = async (req, res) => {
 
     const salt = randomBytes(8).toString("hex");
     const buf = (await scryptAsyc(password, salt, 64)) as Buffer;
+    const UserRepository = AppDataSource.getRepository(Users);
+    const doesUserExist = await UserRepository.findOneBy({
+      email_address: email_address,
+    });
+    if (!doesUserExist) {
+      const User = new Users();
+      User.name = name;
+      User.password = `${buf.toString("hex")}.${salt}`;
+      User.address = address;
+      User.mobile_number = mobile_number;
+      User.email_address = email_address;
+      User.skills = skills.join(",");
+      User.experience = experience;
+      // await AppDataSource.manager.save(User);
 
-    const User = new Users();
-    User.name = name;
-    User.password = `${buf.toString("hex")}.${salt}`;
-    User.address = address;
-    User.mobile_number = mobile_number;
-    User.email_address = email_address;
-    User.skills = skills.join(",");
-    User.experience = experience;
-    await AppDataSource.manager.save(User);
+      const token = jwt.sign({ user: User }, process.env.JWT_KEY);
 
-    const token = jwt.sign({ user: User }, process.env.JWT_KEY);
-
-    res.json({ token });
+      res.json({ token });
+    } else {
+      res.status(404).send({ message: "Email Already In Use" });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
