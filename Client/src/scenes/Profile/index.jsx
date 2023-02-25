@@ -37,7 +37,11 @@ const Profile = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/users/")
+      .get("http://localhost:3000/users/", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then((result) => {
         setInitialValues((value) => {
           return {
@@ -59,7 +63,11 @@ const Profile = () => {
   const handleFormSubmit = (values) => {
     const payload = values;
     axios
-      .put("http://localhost:3000/users/", payload)
+      .put("http://localhost:3000/users/", payload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then((result) => {
         setInitialValues((value) => {
           return {
