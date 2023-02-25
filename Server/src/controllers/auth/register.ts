@@ -33,7 +33,7 @@ export const register = async (req, res) => {
       User.email_address = email_address;
       User.skills = skills.join(",");
       User.experience = experience;
-      // await AppDataSource.manager.save(User);
+      await AppDataSource.manager.save(User);
 
       const token = jwt.sign({ user: User }, process.env.JWT_KEY);
 
