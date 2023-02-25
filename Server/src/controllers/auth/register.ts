@@ -37,7 +37,7 @@ export const register = async (req, res) => {
 
       const token = jwt.sign({ user: User }, process.env.JWT_KEY);
 
-      res.json({ token });
+      res.json({ token, name: User.name });
     } else {
       res.status(404).send({ message: "Email Already In Use" });
     }

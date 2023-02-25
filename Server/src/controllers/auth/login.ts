@@ -22,7 +22,7 @@ export const login = async (req, res) => {
       if (buf.toString("hex") === hashedPassord) {
         const token = jwt.sign({ user: User }, process.env.JWT_KEY);
 
-        res.json({ token });
+        res.json({ token, name: User.name });
       } else {
         res.status(404).send({ message: "Invalid credentials" });
       }

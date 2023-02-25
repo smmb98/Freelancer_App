@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import HomePage from "./scenes/HomePage";
 import Login from "./scenes/Login";
@@ -31,9 +31,6 @@ function App() {
       window.location.pathname.includes("/register") ||
       window.location.pathname.includes("/Register")
     ) {
-      // Get the previous page from the browser history
-      // console.log(previousPathname);
-      // const previousPage = window.history.state?.prevUrl || "/";
       navigate("/");
     }
   }, [navigate]);

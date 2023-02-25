@@ -59,6 +59,7 @@ const Login = () => {
       .post("http://localhost:3000/auth/login", payload)
       .then((result) => {
         localStorage.setItem("token", result.data.token);
+        localStorage.setItem("user", result.data.name);
 
         setIsSnackbarOpen((item) => {
           return {

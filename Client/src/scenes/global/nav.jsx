@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
@@ -33,6 +33,7 @@ const Nav = (props) => {
 
   function logoutButtonHandler() {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     navigate("/login");
   }
   function handleButtonClick(url) {
@@ -52,7 +53,18 @@ const Nav = (props) => {
 
   const drawer = (
     <div>
-      <Toolbar />
+      <Typography
+        variant="h6"
+        component="div"
+        style={{
+          whiteSpace: "pre-wrap",
+          wordWrap: "break-word",
+          textAlign: "center",
+        }}
+        paddingBottom={5}
+      >
+        {localStorage.getItem("user")}
+      </Typography>
       <Divider />
       <List>
         <ListItem key={"Home"} disablePadding>
@@ -159,6 +171,7 @@ const Nav = (props) => {
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           // container={container}
+
           variant="temporary"
           open={drawerOpen}
           onClose={handleDrawerToggle}
@@ -169,6 +182,7 @@ const Nav = (props) => {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              background: "#ffe5b4 !important",
             },
           }}
         >

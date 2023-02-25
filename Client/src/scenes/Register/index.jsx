@@ -44,6 +44,7 @@ const Register = () => {
       .post("http://localhost:3000/auth/register", payload)
       .then((result) => {
         localStorage.setItem("token", result.data.token);
+        localStorage.setItem("user", result.data.name);
         setTimeout(() => {
           setIsSnackbarOpen((item) => {
             return {
