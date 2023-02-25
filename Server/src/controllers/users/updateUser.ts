@@ -18,8 +18,7 @@ export const updateUser = async (req, res) => {
 
     const UserRepository = AppDataSource.getRepository(Users);
     const User = await UserRepository.findOneBy({
-      // id: req.currentUser.id,
-      id: 1,
+      id: req.currentUser.id,
     });
     if (User) {
       const salt = randomBytes(8).toString("hex");

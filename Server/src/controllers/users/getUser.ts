@@ -5,8 +5,7 @@ export const getUser = async (req, res) => {
   try {
     const UserRepository = AppDataSource.getRepository(Users);
     const User = await UserRepository.findOneBy({
-      id: 1,
-      // id: req.currentUser.id,
+      id: req.currentUser.id,
     });
     if (User) {
       const payload = {

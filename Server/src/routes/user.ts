@@ -5,9 +5,7 @@ import { authMiddleware } from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.get("/", getUser);
-router.put("/", updateUser);
-// router.get("/", authMiddleware, getUser);
-// router.put("/", authMiddleware, updateUser);
+router.get("/", authMiddleware, getUser);
+router.put("/", authMiddleware, updateUser);
 
 export { router as userRoutes };
