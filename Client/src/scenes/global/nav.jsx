@@ -1,6 +1,8 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import { Button, TextField } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
@@ -29,6 +31,10 @@ const Nav = (props) => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const navigate = useNavigate();
 
+  function logoutButtonHandler() {
+    localStorage.removeItem("token");
+    navigate("/login");
+  }
   function handleButtonClick(url) {
     navigate(url);
   }
@@ -108,10 +114,12 @@ const Nav = (props) => {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed">
+      <AppBar position="fixed" color="warning">
         <Toolbar>
           <IconButton
             color="inherit"
@@ -127,6 +135,20 @@ const Nav = (props) => {
           <Typography variant="h6" noWrap component="div">
             Freelancer World
           </Typography>
+          <Button
+            onClick={logoutButtonHandler}
+            type="submit"
+            variant="contained"
+            style={{
+              position: "fixed",
+              right: "0",
+              top: "0",
+              margin: isNonMobile ? "15px" : 10,
+            }}
+            color="error"
+          >
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
       <Box
