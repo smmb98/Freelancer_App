@@ -12,6 +12,9 @@ export const getProjects = async (req, res) => {
     if (personal === "true") {
       if (filter === "none" || !filter) {
         const Projects = await ProjectRepository.find({
+          order: {
+            deadline: "DESC",
+          },
           where: {
             projectOwner: { id: req.currentUser.id },
           },
@@ -30,6 +33,9 @@ export const getProjects = async (req, res) => {
         }
       } else {
         const Projects = await ProjectRepository.find({
+          order: {
+            deadline: "DESC",
+          },
           where: {
             projectOwner: { id: req.currentUser.id },
             status: filter,
@@ -54,6 +60,9 @@ export const getProjects = async (req, res) => {
     } else {
       if (filter === "none" || !filter) {
         const Projects = await ProjectRepository.find({
+          order: {
+            deadline: "DESC",
+          },
           where: {
             projectOwner: { id: Not(req.currentUser.id) },
           },
@@ -72,6 +81,9 @@ export const getProjects = async (req, res) => {
         }
       } else {
         const Projects = await ProjectRepository.find({
+          order: {
+            deadline: "DESC",
+          },
           where: {
             projectOwner: { id: Not(req.currentUser.id) },
             status: filter,

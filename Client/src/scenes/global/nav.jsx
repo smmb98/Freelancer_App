@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
@@ -23,18 +23,26 @@ import WorkIcon from "@mui/icons-material/Work";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 import { styled } from "@mui/material/styles";
+import axios from "axios";
 
 const drawerWidth = 240;
 
 const Nav = (props) => {
   const { window } = props;
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
 
   function logoutButtonHandler() {
+    // axios
+    //   .get("localhost:3000/auth/logout")
+    //   .then((result) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/login");
+    // })
+    // .catch((error) => {
+    // console.log("Error", error);
+    // });
   }
   function handleButtonClick(url) {
     navigate(url);
@@ -199,7 +207,9 @@ const Nav = (props) => {
         sx={{
           flexGrow: 1,
           marginTop: 4,
-          p: 3,
+          pt: 4,
+          pb: 2,
+          px: 2,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >

@@ -92,7 +92,7 @@ const Login = () => {
     <>
       <Snackbar
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={3000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -187,7 +187,8 @@ const Login = () => {
                     variant="contained"
                     disabled={
                       !(Object.keys(touched).length > 0) ||
-                      Object.keys(errors).length > 0
+                      Object.keys(errors).length > 0 ||
+                      open
                     }
                   >
                     Submit

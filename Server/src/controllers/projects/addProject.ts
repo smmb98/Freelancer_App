@@ -22,7 +22,7 @@ export const addProject = async (req, res) => {
     Project.emailAddress = emailAddress;
     Project.category = category;
     Project.budget = budget;
-    Project.deadline = deadline;
+    Project.deadline = new Date(deadline);
     Project.projectOwner = req.currentUser.id;
     ProjectRepository.save(Project);
 

@@ -11,7 +11,12 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Link } from "react-router-dom";
 
-const UserForm = ({ screen, initialValues, handleFormSubmit }) => {
+const UserForm = ({
+  screen,
+  initialValues,
+  handleFormSubmit,
+  isFormSubmitted,
+}) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const [showPassword, setShowPassword] = useState(false);
@@ -259,7 +264,8 @@ const UserForm = ({ screen, initialValues, handleFormSubmit }) => {
                     variant="contained"
                     disabled={
                       !(Object.keys(touched).length > 0) ||
-                      Object.keys(errors).length > 0
+                      Object.keys(errors).length > 0 ||
+                      isFormSubmitted
                     }
                   >
                     Submit
@@ -274,7 +280,8 @@ const UserForm = ({ screen, initialValues, handleFormSubmit }) => {
                   variant="contained"
                   disabled={
                     !(Object.keys(touched).length > 0) ||
-                    Object.keys(errors).length > 0
+                    Object.keys(errors).length > 0 ||
+                    isFormSubmitted
                   }
                 >
                   Submit
