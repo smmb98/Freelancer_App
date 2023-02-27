@@ -68,11 +68,15 @@ const HireFreelancer = () => {
     const payload = values;
     console.log(payload);
     axios
-      .post("http://localhost:3000/projects", payload, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
+      .post(
+        `${process.env.APP_URL || "http://localhost:3000/"}api/projects`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
       .then((result) => {
         setTimeout(() => {
           setIsSnackbarOpen((item) => {

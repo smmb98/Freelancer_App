@@ -8,19 +8,21 @@ import { freelancerRoutes } from "./routes/freelancer";
 import { authRoutes } from "./routes/auth";
 
 const app = express();
-app.use(express.static(path.join(path.__dirname, "../client/build")));
+// only for production use
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
 app.set("trust proxy", true);
 app.use(json({ limit: "5mb" }));
 app.use(cors());
 
-app.use("/users", userRoutes);
-app.use("/projects", projectRoutes);
-app.use("/freelancers", freelancerRoutes);
-app.use("/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/projects", projectRoutes);
+app.use("/api/freelancers", freelancerRoutes);
+app.use("/api/auth", authRoutes);
 
+// only for production use
 app.get("*", async (req, res) => {
-  res.sendFile(path.join(path.__dirname + "/../client/build/index.html"));
+  res.sendFile(path.join(__dirname + "/../client/dist/index.html"));
 });
 
 app.all("*", async (req, res) => {

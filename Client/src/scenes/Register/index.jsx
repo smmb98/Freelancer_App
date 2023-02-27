@@ -41,7 +41,10 @@ const Register = () => {
   const handleFormSubmit = (values) => {
     const payload = values;
     axios
-      .post("http://localhost:3000/auth/register", payload)
+      .post(
+        `${process.env.APP_URL || "http://localhost:3000/"}api/auth/register`,
+        payload
+      )
       .then((result) => {
         localStorage.setItem("token", result.data.token);
         localStorage.setItem("user", result.data.name);

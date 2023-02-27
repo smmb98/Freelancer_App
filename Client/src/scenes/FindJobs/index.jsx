@@ -17,11 +17,16 @@ const FindJobs = (props) => {
     const fetchData = async () => {
       // console.log("USE EFFECT");
       await axios
-        .get(`http://localhost:3000/projects?filter=unassigned`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        })
+        .get(
+          `${
+            process.env.APP_URL || "http://localhost:3000/"
+          }api/projects?filter=unassigned`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        )
         .then((result) => {
           console.log(result.data);
           setProjectData(result.data);

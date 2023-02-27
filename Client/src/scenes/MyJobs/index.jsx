@@ -30,11 +30,16 @@ const MyJobs = (props) => {
     const fetchData = async () => {
       // console.log("USE EFFECT");
       await axios
-        .get(`http://localhost:3000/freelancers${queryParams[selectedTab]}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        })
+        .get(
+          `${process.env.APP_URL || "http://localhost:3000/"}api/freelancers${
+            queryParams[selectedTab]
+          }`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        )
         .then((result) => {
           console.log(result.data);
           setProjectData(result.data);

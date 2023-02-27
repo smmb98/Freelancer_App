@@ -30,7 +30,9 @@ const MyProjects = (props) => {
       // console.log("USE EFFECT");
       await axios
         .get(
-          `http://localhost:3000/projects${queryParams[selectedTab]}&personal=true`,
+          `${process.env.APP_URL || "http://localhost:3000/"}api/projects${
+            queryParams[selectedTab]
+          }&personal=true`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,

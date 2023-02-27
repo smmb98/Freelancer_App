@@ -56,7 +56,10 @@ const Login = () => {
   const handleFormSubmit = (values) => {
     const payload = values;
     axios
-      .post("http://localhost:3000/auth/login", payload)
+      .post(
+        `${process.env.APP_URL || "http://localhost:3000/"}api/auth/login`,
+        payload
+      )
       .then((result) => {
         localStorage.setItem("token", result.data.token);
         localStorage.setItem("user", result.data.name);
