@@ -9,8 +9,10 @@ async function main() {
     await AppDataSource.initialize();
     console.log("\nConnected to PostgreSQL Database.\n");
 
-    app.listen(process.env.PORT, () => {
-      console.log("Server listening on http://localhost:" + process.env.PORT);
+    app.listen(process.env.PORT || 3000, () => {
+      console.log(
+        "Server listening on http://localhost:" + process.env.PORT || 3000
+      );
     });
   } catch (err) {
     console.log(err);
