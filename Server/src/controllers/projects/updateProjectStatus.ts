@@ -9,7 +9,6 @@ import { Projects } from "../../entities/Projects";
 export const updateProjectStatus = async (req, res) => {
   try {
     const { status, requestId } = req.body;
-    console.log(status, requestId);
 
     const ProjectRepository = AppDataSource.getRepository(Projects);
     const Project = await ProjectRepository.findOneBy({
@@ -31,12 +30,10 @@ export const updateProjectStatus = async (req, res) => {
           });
         AcceptedFreelancerRequest.status = Status.WORKING;
         FreelancerJobRepository.save(AcceptedFreelancerRequest);
-        console.log(AcceptedFreelancerRequest);
         
         const RejectedFreelancerRequest = await FreelancerJobRepository.find({
           where: { project: { id: req.params.id }, id: Not(requestId) },
         });
-        console.log(RejectedFreelancerRequest);
 
         RejectedFreelancerRequest.forEach((element) => {
           element.rejectionReason = "Not Selected";
