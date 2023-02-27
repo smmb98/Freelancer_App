@@ -6,13 +6,34 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import HeadTabs from "../../components/tabs";
 
 const MyProjects = (props) => {
-  //   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const [selectedTab, setSelectedTab] = useState(0);
   const [projectData, setProjectData] = useState([]);
 
   function handleTabChange(index) {
     setSelectedTab(index);
+  }
+
+  function updateProjectStatus(requestId, projectStatus, projectId) {
+    axios
+      .put(
+        `${
+          import.meta.env.VITE_APP_API_URL || "http://localhost:3000/"
+        }api/projects/${projectId}/status_update`,
+        {
+          status: projectStatus,
+          requestId: requestId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((result) => {
+     
+      })
+      .catch((error) => {});
   }
 
   const queryParams = {
@@ -23,16 +44,13 @@ const MyProjects = (props) => {
   };
 
   const { isLoading, setIsLoading } = useState(true);
-  // ?filter=unassigned
   useEffect(() => {
-    // setIsLoading(true);
     const fetchData = async () => {
-      // console.log("USE EFFECT");
       await axios
         .get(
-          `${process.env.APP_URL || "http://localhost:3000/"}api/projects${
-            queryParams[selectedTab]
-          }&personal=true`,
+          `${
+            import.meta.env.VITE_APP_API_URL || "http://localhost:3000/"
+          }api/projects${queryParams[selectedTab]}&personal=true`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -40,13 +58,10 @@ const MyProjects = (props) => {
           }
         )
         .then((result) => {
-          console.log(result.data);
           setProjectData(result.data);
           setIsLoading(false);
         })
-        .catch((error) => {
-          // console.log("Error", error);
-        });
+        .catch((error) => {});
     };
     fetchData();
   }, [selectedTab]);
@@ -62,6 +77,7 @@ const MyProjects = (props) => {
             page={"my-project"}
             selectedTab={handleTabChange}
             data={projectData}
+            updateProjectStatus={updateProjectStatus}
           />
         )}
       </Box>

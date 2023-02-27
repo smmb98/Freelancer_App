@@ -57,7 +57,9 @@ const Login = () => {
     const payload = values;
     axios
       .post(
-        `${process.env.APP_URL || "http://localhost:3000/"}api/auth/login`,
+        `${
+          import.meta.env.VITE_APP_API_URL || "http://localhost:3000/"
+        }api/auth/login`,
         payload
       )
       .then((result) => {
@@ -88,7 +90,6 @@ const Login = () => {
             open: true,
           };
         });
-        console.log("Error", error.response.data.message);
       });
   };
   return (

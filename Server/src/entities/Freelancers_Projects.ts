@@ -34,7 +34,7 @@ export class Freelancers_Projects extends BaseEntity {
   rejectionReason: String;
 
   @ManyToOne(() => Projects, (Projects) => Projects.requests)
-  projects: Users;
+  project: Projects;
 
   @ManyToOne(() => Users, (Users) => Users.publishedProjects)
   freelancer: Users;

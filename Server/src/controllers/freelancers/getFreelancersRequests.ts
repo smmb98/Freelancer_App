@@ -14,7 +14,7 @@ export const getFreelancersRequests = async (req, res) => {
           freelancer: { id: req.currentUser.id },
         },
         relations: {
-          projects: true,
+          project: true,
           freelancer: true,
         },
       });
@@ -31,7 +31,7 @@ export const getFreelancersRequests = async (req, res) => {
           status: filter,
         },
         relations: {
-          projects: true,
+          project: true,
           freelancer: true,
         },
       });

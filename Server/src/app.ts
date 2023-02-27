@@ -26,7 +26,7 @@ app.get("*", async (req, res) => {
 });
 
 app.all("*", async (req, res) => {
-  res.send("Page not found");
+  res.send({ message: "Page not found" });
 });
 
 export { app };

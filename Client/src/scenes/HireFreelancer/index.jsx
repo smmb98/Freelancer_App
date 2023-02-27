@@ -66,10 +66,11 @@ const HireFreelancer = () => {
 
   const handleFormSubmit = (values) => {
     const payload = values;
-    console.log(payload);
     axios
       .post(
-        `${process.env.APP_URL || "http://localhost:3000/"}api/projects`,
+        `${
+          import.meta.env.VITE_APP_API_URL || "http://localhost:3000/"
+        }api/projects`,
         payload,
         {
           headers: {
@@ -102,7 +103,6 @@ const HireFreelancer = () => {
             open: true,
           };
         });
-        console.log("Error", error.response.data.message);
       });
   };
 
@@ -257,7 +257,6 @@ const HireFreelancer = () => {
                     onBlur={handleBlur}
                     onChange={(value) => {
                       setFieldValue("deadline", value.toString());
-                      // setFieldValue("deadline", Date.parse(value));
                     }}
                     name="deadline"
                     renderInput={(params) => (

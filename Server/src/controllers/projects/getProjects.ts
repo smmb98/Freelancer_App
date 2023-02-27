@@ -1,5 +1,6 @@
 import { Not } from "typeorm";
 import { AppDataSource } from "../../data-source";
+import { Status } from "../../entities/Freelancers_Projects";
 import { Projects } from "../../entities/Projects";
 
 export const getProjects = async (req, res) => {

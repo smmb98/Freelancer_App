@@ -37,11 +37,16 @@ const Profile = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.APP_URL || "http://localhost:3000/"}api/users/`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
+      .get(
+        `${
+          import.meta.env.VITE_APP_API_URL || "http://localhost:3000/"
+        }api/users/`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
       .then((result) => {
         setInitialValues((value) => {
           return {
@@ -56,7 +61,6 @@ const Profile = () => {
         });
       })
       .catch((error) => {
-        // console.log("Error", error);
       });
   }, []);
 
@@ -64,7 +68,9 @@ const Profile = () => {
     const payload = values;
     axios
       .put(
-        `${process.env.APP_URL || "http://localhost:3000/"}api/users/`,
+        `${
+          import.meta.env.VITE_APP_API_URL || "http://localhost:3000/"
+        }api/users/`,
         payload,
         {
           headers: {
@@ -98,7 +104,6 @@ const Profile = () => {
             open: true,
           };
         });
-        console.log("Error", error.response.data.message);
       });
   };
   return (

@@ -21,19 +21,19 @@ export const applyFreelanceJob = async (req, res) => {
     if (doesProjectExist && !isProjectOwned) {
       const isRequestAlreadyExist = await FreelancerJobRepository.findOneBy({
         freelancer: { id: req.currentUser.id },
-        projects: { id: projectId },
+        project: { id: projectId },
       });
 
       if (!isRequestAlreadyExist) {
         const FreelancerJob = new Freelancers_Projects();
 
         FreelancerJob.freelancer = req.currentUser.id;
-        FreelancerJob.projects = projectId;
+        FreelancerJob.project = projectId;
         FreelancerJobRepository.save(FreelancerJob);
 
         res.send(FreelancerJob);
       } else {
-        res.status(404).send({ message: "Already Applied to the Job" });
+        res.status(404).send({ message: "Already Applied to this Job" });
       }
     } else {
       res.status(404).send({ message: "Cannot apply to this project" });

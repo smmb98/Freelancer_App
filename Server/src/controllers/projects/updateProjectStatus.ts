@@ -9,6 +9,7 @@ import { Projects } from "../../entities/Projects";
 export const updateProjectStatus = async (req, res) => {
   try {
     const { status, requestId } = req.body;
+    console.log(status, requestId);
 
     const ProjectRepository = AppDataSource.getRepository(Projects);
     const Project = await ProjectRepository.findOneBy({
@@ -25,15 +26,18 @@ export const updateProjectStatus = async (req, res) => {
 
         const AcceptedFreelancerRequest =
           await FreelancerJobRepository.findOneBy({
-            projects: { id: req.params.id },
+            project: { id: req.params.id },
             id: requestId,
           });
         AcceptedFreelancerRequest.status = Status.WORKING;
         FreelancerJobRepository.save(AcceptedFreelancerRequest);
-
+        console.log(AcceptedFreelancerRequest);
+        
         const RejectedFreelancerRequest = await FreelancerJobRepository.find({
-          where: { projects: { id: req.params.id }, id: Not(requestId) },
+          where: { project: { id: req.params.id }, id: Not(requestId) },
         });
+        console.log(RejectedFreelancerRequest);
+
         RejectedFreelancerRequest.forEach((element) => {
           element.rejectionReason = "Not Selected";
           element.status = Status.REJECTED;
@@ -46,7 +50,7 @@ export const updateProjectStatus = async (req, res) => {
 
         const CompletedFreelancerRequest =
           await FreelancerJobRepository.findOneBy({
-            projects: { id: req.params.id },
+            project: { id: req.params.id },
             id: requestId,
           });
 
@@ -71,7 +75,7 @@ export const updateProjectStatus = async (req, res) => {
 
         const rejectedFreelancerRequest =
           await FreelancerJobRepository.findOneBy({
-            projects: { id: req.params.id },
+            project: { id: req.params.id },
             id: requestId,
           });
 

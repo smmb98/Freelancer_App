@@ -59,7 +59,7 @@ export class Projects extends BaseEntity {
 
   @OneToMany(
     () => Freelancers_Projects,
-    (Freelancers_Projects) => Freelancers_Projects.projects
+    (Freelancers_Projects) => Freelancers_Projects.project
   )
   requests: Freelancers_Projects[];
 

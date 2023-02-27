@@ -6,13 +6,29 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import HeadTabs from "../../components/tabs";
 
 const MyJobs = (props) => {
-  //   const isNonMobile = useMediaQuery("(min-width:600px)");
-
   const [selectedTab, setSelectedTab] = useState(0);
   const [projectData, setProjectData] = useState([]);
 
   function handleTabChange(index) {
     setSelectedTab(index);
+  }
+
+  function completeJob(jobId) {
+    axios
+      .put(
+        `${
+          import.meta.env.VITE_APP_API_URL || "http://localhost:3000/"
+        }api/freelancers/${jobId}/complete_status`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((result) => {
+      })
+      .catch((error) => {});
   }
 
   const queryParams = {
@@ -24,16 +40,13 @@ const MyJobs = (props) => {
   };
 
   const { isLoading, setIsLoading } = useState(true);
-  // ?filter=unassigned
   useEffect(() => {
-    // setIsLoading(true);
     const fetchData = async () => {
-      // console.log("USE EFFECT");
       await axios
         .get(
-          `${process.env.APP_URL || "http://localhost:3000/"}api/freelancers${
-            queryParams[selectedTab]
-          }`,
+          `${
+            import.meta.env.VITE_APP_API_URL || "http://localhost:3000/"
+          }api/freelancers${queryParams[selectedTab]}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -41,13 +54,10 @@ const MyJobs = (props) => {
           }
         )
         .then((result) => {
-          console.log(result.data);
           setProjectData(result.data);
           setIsLoading(false);
         })
-        .catch((error) => {
-          // console.log("Error", error);
-        });
+        .catch((error) => {});
     };
     fetchData();
   }, [selectedTab]);
@@ -63,6 +73,7 @@ const MyJobs = (props) => {
             page={"my-job"}
             selectedTab={handleTabChange}
             data={projectData}
+            completeJob={completeJob}
           />
         )}
       </Box>

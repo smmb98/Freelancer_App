@@ -33,16 +33,11 @@ const Nav = (props) => {
   const navigate = useNavigate();
 
   function logoutButtonHandler() {
-    // axios
-    //   .get("localhost:3000/auth/logout")
-    //   .then((result) => {
+    
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/login");
-    // })
-    // .catch((error) => {
-    // console.log("Error", error);
-    // });
+   
   }
   function handleButtonClick(url) {
     navigate(url);
@@ -173,12 +168,9 @@ const Nav = (props) => {
       </AppBar>
       <Box
         component="nav"
-        // sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-          // container={container}
 
           variant="temporary"
           open={drawerOpen}

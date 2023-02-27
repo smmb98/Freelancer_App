@@ -8,13 +8,23 @@ import FindJobs from "./scenes/FindJobs";
 import MyJobs from "./scenes/MyJobs";
 import MyProjects from "./scenes/MyProjects";
 import Profile from "./scenes/Profile";
-// import SplashScreen from "./scenes/SplashScreen";
+import SplashScreen from "./scenes/SplashScreen";
 import Nav from "./scenes/global/nav";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import "./App.css";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  const skipLoadHandler = () => setIsLoading(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false); // if it's being loaded for the first time, set isLoading to false after 10 seconds
+    }, 10000);
+  }, []);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,59 +48,63 @@ function App() {
   return (
     <div className="App">
       <CssBaseline />
-      <Routes>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<Register />}></Route>
+      {!isLoading ? (
+        <Routes>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
 
-        <Route
-          path="/"
-          element={
-            <Nav>
-              <HomePage />
-            </Nav>
-          }
-        ></Route>
-        <Route
-          path="/hire-freelancer"
-          element={
-            <Nav>
-              <HireFreelancer />
-            </Nav>
-          }
-        ></Route>
-        <Route
-          path="/my-projects"
-          element={
-            <Nav>
-              <MyProjects />
-            </Nav>
-          }
-        ></Route>
-        <Route
-          path="/find-jobs"
-          element={
-            <Nav>
-              <FindJobs />
-            </Nav>
-          }
-        ></Route>
-        <Route
-          path="/my-jobs"
-          element={
-            <Nav>
-              <MyJobs />
-            </Nav>
-          }
-        ></Route>
-        <Route
-          path="/profile"
-          element={
-            <Nav>
-              <Profile />
-            </Nav>
-          }
-        ></Route>
-      </Routes>
+          <Route
+            path="/"
+            element={
+              <Nav>
+                <HomePage />
+              </Nav>
+            }
+          ></Route>
+          <Route
+            path="/hire-freelancer"
+            element={
+              <Nav>
+                <HireFreelancer />
+              </Nav>
+            }
+          ></Route>
+          <Route
+            path="/my-projects"
+            element={
+              <Nav>
+                <MyProjects />
+              </Nav>
+            }
+          ></Route>
+          <Route
+            path="/find-jobs"
+            element={
+              <Nav>
+                <FindJobs />
+              </Nav>
+            }
+          ></Route>
+          <Route
+            path="/my-jobs"
+            element={
+              <Nav>
+                <MyJobs />
+              </Nav>
+            }
+          ></Route>
+          <Route
+            path="/profile"
+            element={
+              <Nav>
+                <Profile />
+              </Nav>
+            }
+          ></Route>
+        </Routes>
+      ) : (
+        <SplashScreen skipLoadHandler={skipLoadHandler} />
+      )}
     </div>
   );
 }

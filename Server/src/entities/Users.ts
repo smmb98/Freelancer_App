@@ -10,7 +10,6 @@ import {
 import { Freelancers_Projects } from "./Freelancers_Projects";
 import { Projects } from "./Projects";
 
-// import { UserFollows } from "./UserFollows";
 
 @Entity()
 export class Users extends BaseEntity {

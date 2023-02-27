@@ -34,7 +34,6 @@ const HomePage = (props) => {
         style={{
           whiteSpace: "pre-wrap",
           wordWrap: "break-word",
-          // textAlign: "center",
         }}
         paddingBottom={5}
       >
